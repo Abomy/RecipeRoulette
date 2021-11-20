@@ -1,5 +1,5 @@
-import Link from "next/link"
-import { useRouter } from "next/router"
+import Link from "next/link";
+import { useRouter } from "next/router";
 
 // function isActive(pathname) {
 //   return (
@@ -8,10 +8,10 @@ import { useRouter } from "next/router"
 // }
 
 const Header = () => {
-  const router = useRouter()
+  const router = useRouter();
 
   function isActive(pathname) {
-    return router.pathname === pathname
+    return router.pathname === pathname;
   }
 
   return (
@@ -70,7 +70,7 @@ const Header = () => {
         }
       `}</style>
     </nav>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;

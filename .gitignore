@@ -6,7 +6,7 @@
 /node_modules
 /.pnp
 .pnp.js
-src/generated/
+/generated
 
 
 # testing

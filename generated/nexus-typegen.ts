@@ -4,9 +4,23 @@
  */
 
 
-
-
-
+import type { core } from "nexus"
+declare global {
+  interface NexusGenCustomInputMethods<TypeName extends string> {
+    /**
+     * A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar.
+     */
+    date<FieldName extends string>(fieldName: FieldName, opts?: core.CommonInputFieldConfig<TypeName, FieldName>): void // "DateTime";
+  }
+}
+declare global {
+  interface NexusGenCustomOutputMethods<TypeName extends string> {
+    /**
+     * A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar.
+     */
+    date<FieldName extends string>(fieldName: FieldName, ...opts: core.ScalarOutSpread<TypeName, FieldName>): void // "DateTime";
+  }
+}
 
 
 declare global {
@@ -25,13 +39,17 @@ export interface NexusGenScalars {
   Float: number
   Boolean: boolean
   ID: string
+  DateTime: any
 }
 
 export interface NexusGenObjects {
   Account: { // root type
+    created?: NexusGenScalars['DateTime'] | null; // DateTime
     email?: string | null; // String
     id?: string | null; // String
-    name?: string | null; // String
+    last_login?: NexusGenScalars['DateTime'] | null; // DateTime
+    updated?: NexusGenScalars['DateTime'] | null; // DateTime
+    username?: string | null; // String
   }
   Mutation: {};
   Query: {};
@@ -49,29 +67,35 @@ export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars
 
 export interface NexusGenFieldTypes {
   Account: { // field return type
+    created: NexusGenScalars['DateTime'] | null; // DateTime
     email: string | null; // String
     id: string | null; // String
-    name: string | null; // String
+    last_login: NexusGenScalars['DateTime'] | null; // DateTime
+    updated: NexusGenScalars['DateTime'] | null; // DateTime
+    username: string | null; // String
   }
   Mutation: { // field return type
     signupUser: NexusGenRootTypes['Account'] | null; // Account
   }
   Query: { // field return type
-    ok: boolean; // Boolean!
+    getMe: NexusGenRootTypes['Account'] | null; // Account
   }
 }
 
 export interface NexusGenFieldTypeNames {
   Account: { // field return type name
+    created: 'DateTime'
     email: 'String'
     id: 'String'
-    name: 'String'
+    last_login: 'DateTime'
+    updated: 'DateTime'
+    username: 'String'
   }
   Mutation: { // field return type name
     signupUser: 'Account'
   }
   Query: { // field return type name
-    ok: 'Boolean'
+    getMe: 'Account'
   }
 }
 
@@ -81,6 +105,11 @@ export interface NexusGenArgTypes {
       email: string; // String!
       password: string; // String!
       username?: string | null; // String
+    }
+  }
+  Query: {
+    getMe: { // args
+      email: string; // String!
     }
   }
 }

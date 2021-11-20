@@ -1,8 +1,7 @@
-import Layout from "../components/Layout"
-import Link from "next/link"
-import gql from "graphql-tag"
-import { useQuery } from "@apollo/client"
-
+import Layout from "../components/Layout";
+import Link from "next/link";
+import gql from "graphql-tag";
+import { useQuery } from "@apollo/client";
 
 const Tile = ({ data }) => (
   <Link href="#" as={`#`}>
@@ -20,13 +19,13 @@ const Tile = ({ data }) => (
       `}</style>
     </a>
   </Link>
-)
+);
 
 let test = {
   title: "Testerino",
   stub: "Tile test",
-  content: "Hello world! classic."
-}
+  content: "Hello world! classic.",
+};
 
 const Landing = () => {
   // const { loading, error, data } = useQuery(FeedQuery, {
@@ -44,9 +43,7 @@ const Landing = () => {
     <Layout>
       <div className="page">
         <h1>Recipe Thigy!</h1>
-        <main>
-          { Tile({data: test})}
-        </main>
+        <main>{Tile({ data: test })}</main>
       </div>
       <style jsx>{`
         .post {
@@ -63,7 +60,7 @@ const Landing = () => {
         }
       `}</style>
     </Layout>
-  )
-}
+  );
+};
 
-export default Landing
+export default Landing;
