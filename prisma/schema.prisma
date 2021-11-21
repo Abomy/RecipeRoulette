@@ -10,83 +10,83 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
 model Account {
-  id String @id @default(uuid())
-  username String @unique
-  password String
-  email String @unique
+  id         String    @id @default(uuid())
+  username   String    @unique
+  password   String
+  email      String    @unique
   last_login DateTime?
-  created DateTime @default(now())
-  updated DateTime @updatedAt
+  created    DateTime  @default(now())
+  updated    DateTime  @updatedAt
+  salt       String    @default("")
 
   created_recipes Recipe[]
-  favorites Favorite[]
+  favorites       Favorite[]
 }
 
-model Favorite {  
-  id String @id @default(uuid())
+model Favorite {
+  id         String @id @default(uuid())
   account_id String
-  recipe_id String
-  
+  recipe_id  String
+
   Account Account @relation(fields: [account_id], references: [id])
-  Recipe Recipe @relation(fields: [recipe_id], references: [id])
+  Recipe  Recipe  @relation(fields: [recipe_id], references: [id])
 }
 
+model Recipe {
+  id           String @id @default(uuid())
+  creator_id   String
+  category_id  String
+  title        String
+  instructions String
 
-model Recipe {  
-  id String @id @default(uuid())
-  creator_id String
-  category_id String
-  title String
-  instructions String 
 
-
-  creator Account @relation(fields: [creator_id], references: [id])
-  category Category @relation(fields: [category_id], references: [id])
+  creator            Account            @relation(fields: [creator_id], references: [id])
+  category           Category           @relation(fields: [category_id], references: [id])
   recipe_ingredients RecipeIngredient[]
-  favorites Favorite[]
+  favorites          Favorite[]
 }
 
-model RecipeIngredient {  
-  id String @id @default(uuid())
-  recipe_id String
+model RecipeIngredient {
+  id            String @id @default(uuid())
+  recipe_id     String
   ingredient_id String
-  unit_id String
-  amount String
-  
-  recipe Recipe @relation(fields: [recipe_id], references: [id])
+  unit_id       String
+  amount        String
+
+  recipe     Recipe     @relation(fields: [recipe_id], references: [id])
   ingredient Ingredient @relation(fields: [ingredient_id], references: [id])
-  unit Unit @relation(fields: [unit_id], references: [id])
+  unit       Unit       @relation(fields: [unit_id], references: [id])
 
 }
 
-model Ingredient {  
-  id String @id @default(uuid())  
-  name String @unique
-  type_id String 
-  
-  type FoodType @relation(fields: [type_id], references: [id])
+model Ingredient {
+  id      String @id @default(uuid())
+  name    String @unique
+  type_id String
+
+  type               FoodType           @relation(fields: [type_id], references: [id])
   recipe_ingredients RecipeIngredient[]
 }
 
-model FoodType {  
-  id String @id @default(uuid())
+model FoodType {
+  id   String @id @default(uuid())
   name String @unique
 
   ingredient Ingredient[]
 }
 
-model Unit {  
-  id String @id @default(uuid())
-  name String @unique
-  symbol String 
+model Unit {
+  id     String @id @default(uuid())
+  name   String @unique
+  symbol String
 
   recipe_ingredients RecipeIngredient[]
-  
+
 }
-model Category {  
-  id String @id @default(uuid())
+
+model Category {
+  id   String @id @default(uuid())
   name String @unique
 
   recipes Recipe[]

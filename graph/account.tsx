@@ -1,11 +1,7 @@
-import {
-  extendType,
-  mutationField,
-  nonNull,
-  objectType,
-  stringArg,
-} from "nexus";
+import { extendType, nonNull, objectType, stringArg } from "nexus";
 import prisma from "../lib/prisma";
+import crypto from "crypto";
+import { Account as PrismaAccount } from ".prisma/client";
 
 export const Account = objectType({
   name: "Account",
@@ -22,19 +18,25 @@ export const Account = objectType({
 export const signupUser = extendType({
   type: "Mutation",
   definition(t) {
-    t.field("signupUser", {
+    t.field("createAccount", {
       type: "Account",
       args: {
-        username: stringArg(),
+        username: nonNull(stringArg()),
         email: nonNull(stringArg()),
         password: nonNull(stringArg()),
       },
       resolve: (_, { username, email, password }, ctx) => {
+        const salt = crypto.randomBytes(16).toString("hex");
+        const passwordHash = crypto
+          .pbkdf2Sync(password, salt, 1000, 64, "sha512")
+          .toString("hex");
+
         return prisma.account.create({
           data: {
             username,
             email,
-            password,
+            password: passwordHash,
+            salt,
           },
         });
       },
@@ -51,10 +53,45 @@ export const getMe = extendType({
         email: nonNull(stringArg()),
       },
       resolve: (_, args) => {
-        console.log(args.email);
         return prisma.account.findUnique({
           where: { email: String(args.email) },
         });
+      },
+    });
+  },
+});
+
+export function validatePassword(user: PrismaAccount, inputPassword) {
+  const inputHash = crypto
+    .pbkdf2Sync(inputPassword, user.salt, 1000, 64, "sha512")
+    .toString("hex");
+
+  return user.password === inputHash;
+}
+
+export const logIn = extendType({
+  type: "Mutation",
+  definition(t) {
+    t.field("logIn", {
+      type: "Account",
+      args: {
+        username: stringArg(),
+        password: nonNull(stringArg()),
+      },
+      resolve: async (_, { username, password }, ctx) => {
+        const user = await prisma.account.findFirst({
+          where: {
+            username: {
+              equals: username,
+            },
+          },
+        });
+
+        if (validatePassword(user, password)) {
+          return user;
+        }
+
+        throw new Error("Invalid");
       },
     });
   },
