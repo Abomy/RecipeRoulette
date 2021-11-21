@@ -1,4 +1,7 @@
 import { ApolloProvider, ApolloClient, InMemoryCache } from "@apollo/client";
+import { ThemeProvider } from "styled-components";
+
+import { GlobalStyles, Theme } from "../lib/theme";
 
 const client = new ApolloClient({
   cache: new InMemoryCache(),
@@ -7,9 +10,12 @@ const client = new ApolloClient({
 
 function MyApp({ Component, pageProps }) {
   return (
-    <ApolloProvider client={client}>
-      <Component {...pageProps} />
-    </ApolloProvider>
+    <ThemeProvider theme={Theme}>
+      <GlobalStyles />
+      <ApolloProvider client={client}>
+        <Component {...pageProps} />
+      </ApolloProvider>
+    </ThemeProvider>
   );
 }
 
