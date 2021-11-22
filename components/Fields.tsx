@@ -13,7 +13,7 @@ interface BaseInputProps
     "onChange" | "onBlur" | "type"
   > {
   label: string;
-  error?: string;
+  error?: { message: string };
 }
 
 export const BaseInput = React.forwardRef<HTMLInputElement, BaseInputProps>(
