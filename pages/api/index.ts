@@ -4,6 +4,8 @@ import { makeSchema } from "nexus";
 import path from "path";
 import cors from "micro-cors";
 import * as GraphTypes from "../../graph";
+import { getLoginSession } from "../../lib/auth/auth";
+import cookies from "../../lib/auth/cookie";
 
 export const schema = makeSchema({
   types: [GraphTypes],
@@ -19,7 +21,26 @@ export const config = {
   },
 };
 
-const apolloServer = new ApolloServer({ schema });
+async function isAuthenticated(req) {
+  try {
+    const session = await getLoginSession(req);
+    console.log(session);
+    return !!session;
+  } catch (error) {
+    return false;
+  }
+}
+
+function context(ctx) {
+  return {
+    // expose the cookie helper in the GraphQL context object
+    cookie: ctx.res.cookie,
+    // allow queries and mutations to look for an `isMe` boolean in the context object
+    isMe: isAuthenticated(ctx.req),
+  };
+}
+
+const apolloServer = new ApolloServer({ schema, context });
 
 let apolloServerHandler: NextApiHandler;
 
@@ -46,4 +67,4 @@ const handler: NextApiHandler = async (req, res) => {
   return apolloServerHandler(req, res);
 };
 
-export default cors()(handler);
+export default cors()(cookies(handler));
