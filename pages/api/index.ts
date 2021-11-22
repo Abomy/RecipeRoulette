@@ -1,11 +1,9 @@
 import { ApolloServer } from "apollo-server-micro";
-import { DateTimeResolver } from "graphql-scalars";
 import { NextApiHandler } from "next";
-import { asNexusMethod, makeSchema } from "nexus";
+import { makeSchema } from "nexus";
 import path from "path";
 import cors from "micro-cors";
 import * as GraphTypes from "../../graph";
-import { typegenAutoConfig } from "nexus/dist/typegenAutoConfig";
 
 export const schema = makeSchema({
   types: [GraphTypes],
