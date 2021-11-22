@@ -1,53 +1,58 @@
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
+import { gql, useMutation, useLazyQuery } from "@apollo/client";
 
-// export default function LoginForm() {
-//   return (
-//     <form>
-//       <div id="stacked">
-//         <h1>Login</h1>
-//         <label> Username / Email </label>
-//         <input
-//           id="fuser"
-//           autoFocus
-//           placeholder="Username / Email"
-//           type="text"
-//         />
+const LOGIN = gql`
+  mutation LogIn($password: String!, $username: String) {
+    logIn(password: $password, username: $username) {
+      id
+      username
+      email
+      created
+      last_login
+      updated
+    }
+  }
+`;
 
-//         <label> Password </label>
-//         <input id="fpass" placeholder="Password" type="password" />
-//         <input type="submit" value="Sign in" />
-//       </div>
-//     </form>
-//   );
-// }
+const GET_ME = gql`
+  query GetMe {
+    getMe {
+      id
+    }
+  }
+`;
 
 export default function LoginForm() {
+  const [login, { data, loading, error }] = useMutation(LOGIN);
+  const [getMe, { called }] = useLazyQuery(GET_ME);
+
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm<{ username: string; password: string }>();
-  const onSubmit = data => console.log(data);
 
-  console.log(watch("username"));
+  const onSubmit = async data => {
+    await login({
+      variables: {
+        ...data,
+      },
+    });
+  };
 
   return (
     <span>
       <h1>Login</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
         <label> Username / Email </label>
-        <input
-          defaultValue="Username / Email"
-          {...register("username")}
-          type="text"
-        />
+        <input {...register("username")} type="text" />
 
         <label> Password </label>
         <input type="password" {...register("password", { required: true })} />
         <input type="submit" value="Sign in" />
       </form>
+      <div onClick={() => getMe()}>Look at me i'm a funny button :) </div>
     </span>
   );
 }

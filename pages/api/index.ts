@@ -23,20 +23,18 @@ export const config = {
 
 async function isAuthenticated(req) {
   try {
-    const session = await getLoginSession(req);
-    console.log(session);
-    return !!session;
+    return await getLoginSession(req);
   } catch (error) {
-    return false;
+    return null;
   }
 }
 
-function context(ctx) {
+async function context(ctx) {
   return {
     // expose the cookie helper in the GraphQL context object
     cookie: ctx.res.cookie,
     // allow queries and mutations to look for an `isMe` boolean in the context object
-    isMe: isAuthenticated(ctx.req),
+    user: await isAuthenticated(ctx.req),
   };
 }
 

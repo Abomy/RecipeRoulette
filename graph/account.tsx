@@ -52,16 +52,14 @@ export const getMe = extendType({
       type: "Account",
       args: {},
       resolve: (_, __, ctx) => {
-        const { isMe } = ctx;
+        const { user } = ctx;
 
-        if (!isMe) {
+        if (!user) {
           return null;
         }
 
-        console.log(isMe);
-
         return prisma.account.findUnique({
-          where: { email: String(isMe.email) },
+          where: { email: String(user.email) },
         });
       },
     });
@@ -99,8 +97,6 @@ export const logIn = extendType({
       },
       resolve: async (_, { username, password }, ctx) => {
         const { cookie } = ctx;
-        console.log(ctx);
-
         const user = await findAccount(username);
 
         if (validatePassword(user, password)) {
