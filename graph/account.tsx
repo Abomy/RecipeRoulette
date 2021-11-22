@@ -69,6 +69,18 @@ export function validatePassword(user: PrismaAccount, inputPassword) {
   return user.password === inputHash;
 }
 
+export const findAccount = async (username: string) => {
+  const user = await prisma.account.findFirst({
+    where: {
+      username: {
+        equals: username,
+      },
+    },
+  });
+
+  return user;
+};
+
 export const logIn = extendType({
   type: "Mutation",
   definition(t) {
@@ -79,13 +91,7 @@ export const logIn = extendType({
         password: nonNull(stringArg()),
       },
       resolve: async (_, { username, password }, ctx) => {
-        const user = await prisma.account.findFirst({
-          where: {
-            username: {
-              equals: username,
-            },
-          },
-        });
+        const user = await findAccount(username);
 
         if (validatePassword(user, password)) {
           return user;
