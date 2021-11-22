@@ -1,17 +1,17 @@
 import styled from "styled-components";
 
 export const StyledHeader = styled.header`
+  font-size: 3em;
   background-color: ${({ theme }) => theme.colours.header};
-  padding: 10px 0;
+  padding: 0px 0;
   margin: 0;
-  border-radius: 1rem;
 `;
 
 export const Nav = styled.nav`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottoms 20px; 
+  margin-bottoms 0px; 
 
   @media (max-width: ${({ theme }) => theme.mobile}) {
     flex-direction: column;
@@ -21,6 +21,6 @@ export const Nav = styled.nav`
 
 export const Logo = styled.img`
   @media (max-width: ${({ theme }) => theme.mobile}) {
-    margin-bottom: 20px;
+    margin-bottom: 10px;
   }
 `;

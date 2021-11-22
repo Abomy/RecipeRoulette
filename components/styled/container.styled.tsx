@@ -1,9 +1,17 @@
 import styled from "styled-components";
+import { ErrorLabel } from "./fields.styled";
 
 export const Container = styled.div`
-    withd: 100%;
-    max-width: 100%;
-    padding: 0 20px;
-    margin 0 auto;
+  max-width: 100%;
+  padding: 0 0px;
+  margin: 0 auto;
+  position: relative;
+`;
 
+export const InputContainer = styled(Container)`
+  :focus-within {
+    ${ErrorLabel} {
+      opacity: 1;
+    }
+  }
 `;

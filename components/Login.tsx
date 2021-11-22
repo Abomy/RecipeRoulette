@@ -34,7 +34,7 @@ export default function LoginForm() {
   console.log(watch("username"));
 
   return (
-    <Temp>
+    <span>
       <h1>Login</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
         <label> Username / Email </label>
@@ -48,7 +48,7 @@ export default function LoginForm() {
         <input type="password" {...register("password", { required: true })} />
         <input type="submit" value="Sign in" />
       </form>
-    </Temp>
+    </span>
   );
 }
 

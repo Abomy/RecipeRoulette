@@ -7,8 +7,7 @@ import LoginForm from "../components/Login";
 const Landing = () => {
   return (
     <Container>
-      <Header></Header>
-      <CenteredCard opacity="0.9">
+      <CenteredCard opacity={"0.9"}>
         <LoginForm />
       </CenteredCard>
     </Container>

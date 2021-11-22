@@ -4,7 +4,6 @@ import { Button } from "./styled/button.styled";
 import { Theme } from "../lib/theme";
 
 export default function Header(...args) {
-  console.log(args);
   return (
     <StyledHeader>
       <Container>
