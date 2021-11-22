@@ -1,6 +1,6 @@
 import { ApolloProvider, ApolloClient, InMemoryCache } from "@apollo/client";
 import { ThemeProvider } from "styled-components";
-import Layout from "../components/layout";
+import Layout from "../components/Layout";
 
 import { Theme } from "../lib/theme";
 
