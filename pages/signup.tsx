@@ -11,7 +11,19 @@ import {
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import ErrorFields from "../components/ErrorFields";
-import { useRef } from "react";
+import { gql, useMutation } from "@apollo/client";
+
+const CREATE_ACCOUNT = gql`
+  mutation CreateAccount(
+    $email: String!
+    $password: String!
+    $username: String!
+  ) {
+    createAccount(email: $email, password: $password, username: $username) {
+      id
+    }
+  }
+`;
 
 const validation = yup.object().shape({
   username: yup.string().required("Username rquired"),
@@ -40,8 +52,10 @@ const Signup = () => {
     mode: "all",
   });
 
-  const submit = data => {
-    console.log(data);
+  const [createAccount, { data, loading, error }] = useMutation(CREATE_ACCOUNT);
+
+  const submit = async data => {
+    await createAccount({ variables: data });
   };
 
   return (
