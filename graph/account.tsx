@@ -2,6 +2,7 @@ import { extendType, nonNull, objectType, stringArg } from "nexus";
 import prisma from "../lib/prisma";
 import crypto from "crypto";
 import { Account as PrismaAccount } from ".prisma/client";
+import { setLoginSession } from "../lib/auth/auth";
 
 export const Account = objectType({
   name: "Account",
@@ -49,12 +50,18 @@ export const getMe = extendType({
   definition(t) {
     t.field("getMe", {
       type: "Account",
-      args: {
-        email: nonNull(stringArg()),
-      },
-      resolve: (_, args) => {
+      args: {},
+      resolve: (_, __, ctx) => {
+        const { isMe } = ctx;
+
+        if (!isMe) {
+          return null;
+        }
+
+        console.log(isMe);
+
         return prisma.account.findUnique({
-          where: { email: String(args.email) },
+          where: { email: String(isMe.email) },
         });
       },
     });
@@ -69,6 +76,18 @@ export function validatePassword(user: PrismaAccount, inputPassword) {
   return user.password === inputHash;
 }
 
+export const findAccount = async (username: string) => {
+  const user = await prisma.account.findFirst({
+    where: {
+      username: {
+        equals: username,
+      },
+    },
+  });
+
+  return user;
+};
+
 export const logIn = extendType({
   type: "Mutation",
   definition(t) {
@@ -79,15 +98,15 @@ export const logIn = extendType({
         password: nonNull(stringArg()),
       },
       resolve: async (_, { username, password }, ctx) => {
-        const user = await prisma.account.findFirst({
-          where: {
-            username: {
-              equals: username,
-            },
-          },
-        });
+        const { cookie } = ctx;
+        console.log(ctx);
+
+        const user = await findAccount(username);
 
         if (validatePassword(user, password)) {
+          const cook = await setLoginSession(user);
+          cookie(cook);
+
           return user;
         }
 
