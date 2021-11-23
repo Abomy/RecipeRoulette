@@ -50,5 +50,5 @@ export const PasswordInput = React.forwardRef<HTMLInputElement, BaseInputProps>(
 );
 
 export const ButtonInput = props => {
-  return <SubmitButton type={"submit"} value={props.label} />;
+  return <SubmitButton type={"submit"} value={props.label} {...props} />;
 };

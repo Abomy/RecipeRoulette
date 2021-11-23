@@ -3,7 +3,7 @@ import { ErrorLabel } from "./fields.styled";
 
 export const Container = styled.div`
   max-width: 100%;
-  padding: 0 0px;
+  padding: 0 10px;
   margin: 0 auto;
   position: relative;
 `;

@@ -29,3 +29,8 @@ export const CenteredCard = styled(StyledCard)<{
   justify-content: center;
   align-items: center;
 `;
+
+export const CenteredCardBlock = styled(CenteredCard)`
+  display: flex;
+  flex-direction: column;
+`;
