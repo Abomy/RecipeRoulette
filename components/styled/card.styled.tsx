@@ -5,6 +5,7 @@ export const StyledCard = styled.div<{
   margin?: string;
   padding?: string;
 }>`
+  word-wrap: break-word;
   display: flex;
   align-items: center;
   background: rgba(255, 255, 255, ${props => props.opacity});
@@ -26,6 +27,7 @@ export const CenteredCard = styled(StyledCard)<{
 }>`
   margin: ${props => props.margin || "2em "} auto;
   width: 80%;
+  max-width: inherit;
   justify-content: center;
   align-items: center;
 `;

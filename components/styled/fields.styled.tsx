@@ -35,6 +35,9 @@ export const StyledInput = styled.input`
 
 export const StyledLabel = styled.label`
   // specifics
+  display: inline-block;
+  word-wrap: break-word;
+  max-width: inherit;
   font-size: 3em;
 `;
 

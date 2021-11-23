@@ -1,27 +1,32 @@
+import { useRouter } from "next/dist/client/router";
 import LoginForm from "../components/Login";
 import { CenteredCardBlock } from "../components/styled/card.styled";
 import { Container } from "../components/styled/container.styled";
+import { StyledLabel } from "../components/styled/fields.styled";
 
-async function getInitialProps({ req, res }) {
-  console.log("");
+export async function getServerSideProps({ req, res }) {
   //const { req, res } = context;
-  console.log(req);
-  console.log(res);
-  //const { cookies } = req;
-
+  const { cookies } = req;
+  if (cookies.token === undefined) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: "/login",
+      },
+    };
+  }
   return {
-    props: { cookies: "" }, // will be passed to the page component as props
+    props: { cookie: cookies }, // will be passed to the page component as props
   };
 }
-function Loggedin() {
+export default function Loggedin({ cookie }) {
+  console.log(cookie);
   return (
     <Container>
       <CenteredCardBlock opacity="0.9">
-        <h1>You have logged in!</h1>
+        <StyledLabel>You have logged in!</StyledLabel>
+        <StyledLabel>{cookie.token}</StyledLabel>
       </CenteredCardBlock>
     </Container>
   );
 }
-
-Loggedin.getInitialProps = getInitialProps;
-export default Loggedin;
