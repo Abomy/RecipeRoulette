@@ -53,3 +53,7 @@ export const SubmitButton = styled(StyledInput)`
     background-color: #45a049;
   }
 `;
+
+export const JsonCode = styled.code`
+  font-size: 3em;
+`;
