@@ -7,8 +7,6 @@ module.exports = {
     'eslint:recommended',
     'plugin:react/recommended',
     'plugin:@typescript-eslint/recommended',
-    'airbnb',
-    'airbnb/hooks',
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
