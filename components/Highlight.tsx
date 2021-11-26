@@ -5,7 +5,7 @@ import json from "highlight.js/lib/languages/json";
 import "highlight.js/styles/monokai-sublime.css";
 import { JsonCode } from "./styled/fields.styled";
 
-const Highlight = ({ children, testId }) => {
+const Highlight = ({ children }) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const codeNode = useRef();
   const language = "json";
@@ -27,7 +27,7 @@ const Highlight = ({ children, testId }) => {
   if (!isLoaded) return null;
 
   return (
-    <pre className="rounded" data-testid={testId}>
+    <pre className="rounded">
       <JsonCode ref={codeNode} className={language}>
         {children}
       </JsonCode>
