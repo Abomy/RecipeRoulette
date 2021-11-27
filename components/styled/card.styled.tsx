@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const StyledCard = styled.div<{
   opacity?: string;
@@ -8,11 +8,11 @@ export const StyledCard = styled.div<{
   word-wrap: break-word;
   display: flex;
   align-items: center;
-  background: rgba(255, 255, 255, ${props => props.opacity});
+  background: rgba(255, 255, 255, ${(props) => props.opacity});
   border-radius: 1rem;
   box-shadow: 0 0 1rem rgba(0, 0, 0, 0.15);
-  margin: ${props => props.margin || "10rem 0"};
-  padding: ${props => props.padding || "6rem"};
+  margin: ${(props) => props.margin || '10rem 0'};
+  padding: ${(props) => props.padding || '6rem'};
 
   & > div {
     flex: 1;
@@ -25,7 +25,7 @@ export const StyledCard = styled.div<{
 export const CenteredCard = styled(StyledCard)<{
   margin?: string;
 }>`
-  margin: ${props => props.margin || "2em "} auto;
+  margin: ${(props) => props.margin || '2em '} auto;
   width: 80%;
   max-width: inherit;
   justify-content: center;

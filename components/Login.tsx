@@ -1,15 +1,13 @@
-import { useForm } from "react-hook-form";
-import styled from "styled-components";
-import { gql, useMutation, useLazyQuery } from "@apollo/client";
-import { Container } from "./styled/container.styled";
-import { CenteredCard, CenteredCardBlock } from "./styled/card.styled";
-import ReactHookForm from "./Form";
-import { ButtonInput, PasswordInput, UserNameInput } from "./Fields";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
-import { Button } from "./styled/button.styled";
-import { redirect } from "next/dist/server/api-utils";
-import { useRouter } from "next/dist/client/router";
+import { useForm } from 'react-hook-form';
+import { gql, useMutation, useLazyQuery } from '@apollo/client';
+import { Container } from './styled/container.styled';
+import { CenteredCardBlock } from './styled/card.styled';
+import ReactHookForm from './Form';
+import { ButtonInput, PasswordInput, UserNameInput } from './Fields';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+import { Button } from './styled/button.styled';
+import { useRouter } from 'next/dist/client/router';
 
 const LOGIN = gql`
   mutation LogIn($password: String!, $username: String) {
@@ -37,20 +35,20 @@ export default function LoginForm() {
   const [getMe, { called }] = useLazyQuery(GET_ME);
   const router = useRouter();
 
-  const onSubmit = async data => {
+  const onSubmit = async (data) => {
     try {
       const response = await login({
         variables: {
           ...data,
         },
       });
-      router.push("loggedin");
+      router.push('loggedin');
     } catch (err) {}
   };
 
   const validation = yup.object().shape({
-    username: yup.string().required("Username rquired"),
-    password: yup.string().required("Password rquired"),
+    username: yup.string().required('Username rquired'),
+    password: yup.string().required('Password rquired'),
   });
 
   const {
@@ -59,8 +57,8 @@ export default function LoginForm() {
     formState: { errors },
   } = useForm<{ username: string; password: string }>({
     resolver: yupResolver(validation),
-    reValidateMode: "onChange",
-    mode: "all",
+    reValidateMode: 'onChange',
+    mode: 'all',
   });
 
   return (
@@ -76,22 +74,22 @@ export default function LoginForm() {
       <div onClick={() => getMe()}>Look at me i'm a funny button :) </div> */}
 
       <Container>
-        <CenteredCardBlock opacity={"0.8"} margin={"2em"} padding={"10em"}>
+        <CenteredCardBlock opacity={'0.8'} margin={'2em'} padding={'10em'}>
           {error && <h1>Invalid username or password</h1>}
           <ReactHookForm onSubmit={handleSubmit(onSubmit)}>
             <UserNameInput
-              label="Username:"
-              name="username"
+              label='Username:'
+              name='username'
               error={errors.username}
-              {...register("username")}
+              {...register('username')}
             />
             <PasswordInput
-              label="Password:"
-              name="password"
+              label='Password:'
+              name='password'
               error={errors.password}
-              {...register("password")}
+              {...register('password')}
             />
-            <ButtonInput label="Login" name="submit" />
+            <ButtonInput label='Login' name='submit' />
           </ReactHookForm>
           <Button onMouseUp={() => getMe()}> Get meeee</Button>
         </CenteredCardBlock>
@@ -99,8 +97,3 @@ export default function LoginForm() {
     </span>
   );
 }
-
-const Temp = styled.div`
-  width: 60%;
-  margin: 20px auto;
-`;

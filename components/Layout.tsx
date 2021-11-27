@@ -1,10 +1,10 @@
-import styled from "styled-components";
-import { Theme } from "../lib/theme";
-import Footer from "./Footer";
-import Header from "./Header";
-import { StyledMain } from "./styled/layout.styled";
+import React from 'react';
+import { Theme } from '../lib/theme';
+import Footer from './Footer';
+import Header from './Header';
+import { StyledMain } from './styled/layout.styled';
 
-export default function Layout({ children }) {
+const Layout: React.FC = ({ children }) => {
   return (
     <>
       <StyledMain>
@@ -27,4 +27,6 @@ export default function Layout({ children }) {
       `}</style>
     </>
   );
-}
+};
+
+export default Layout;

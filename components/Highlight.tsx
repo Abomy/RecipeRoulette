@@ -1,14 +1,14 @@
-import React, { useEffect, useState, useRef } from "react";
-import hljs from "highlight.js/lib/core";
-import json from "highlight.js/lib/languages/json";
+import React, { useEffect, useState, useRef } from 'react';
+import hljs from 'highlight.js/lib/core';
+import json from 'highlight.js/lib/languages/json';
 
-import "highlight.js/styles/monokai-sublime.css";
-import { JsonCode } from "./styled/fields.styled";
+import 'highlight.js/styles/monokai-sublime.css';
+import { JsonCode } from './styled/fields.styled';
 
-const Highlight = ({ children }) => {
+const Highlight: React.FC = ({ children }) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const codeNode = useRef();
-  const language = "json";
+  const language = 'json';
 
   useEffect(() => {
     try {
@@ -27,7 +27,7 @@ const Highlight = ({ children }) => {
   if (!isLoaded) return null;
 
   return (
-    <pre className="rounded">
+    <pre className='rounded'>
       <JsonCode ref={codeNode} className={language}>
         {children}
       </JsonCode>
