@@ -22,3 +22,8 @@ After pulling to apply any migrations run:
 Develop components without needing to put UI into specific state
 
 `npm run storybook`
+
+For added aliases edit .storybook/main.js
+Lines 14:
+
+> "'@components': path.resolve(\_\_dirname, '../components'),"
