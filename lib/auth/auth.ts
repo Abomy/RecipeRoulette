@@ -1,8 +1,10 @@
-import Iron from "@hapi/iron";
-import { MAX_AGE, setTokenCookie, getTokenCookie } from "./auth-cookies";
+import { getSession, Session } from '@auth0/nextjs-auth0';
+import Iron from '@hapi/iron';
+import prisma from '@lib/prisma';
+import { MAX_AGE, setTokenCookie, getTokenCookie } from './auth-cookies';
 
 const TOKEN_SECRET =
-  process.env.TOKEN_SECRET || "cmewrtzMs7TwXgw&SXqZk15uQ3z@Qfja";
+  process.env.TOKEN_SECRET || 'cmewrtzMs7TwXgw&SXqZk15uQ3z@Qfja';
 
 export async function setLoginSession(session) {
   const createdAt = Date.now();
@@ -24,8 +26,22 @@ export async function getLoginSession(req) {
 
   // Validate the expiration date of the session
   if (Date.now() > expiresAt) {
-    throw new Error("Session expired");
+    throw new Error('Session expired');
   }
 
+  return session;
+}
+
+async function getAccount(sub: string) {
+  return await prisma.account.findFirst({
+    where: { auth0: sub },
+    select: { id: true },
+  });
+}
+
+export async function getAuthorizedUser(req, res): Promise<Session> {
+  const session = getSession(req, res);
+  const record = await getAccount(session.user.sub);
+  session.user.id = record.id;
   return session;
 }

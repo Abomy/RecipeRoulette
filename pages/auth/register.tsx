@@ -13,7 +13,7 @@ export default function Profile({ redirect }: Props) {
       Router.replace('/');
     }
   });
-  //If loading get slow on production, show processing screen
+  //If loading get slow on production, show processing
   return `</>`;
 }
 

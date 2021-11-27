@@ -1,32 +1,40 @@
 import { CenteredCardBlock } from '../components/styled/card.styled';
 import { Container } from '../components/styled/container.styled';
 import { StyledLabel } from '../components/styled/fields.styled';
-import { useUser, withPageAuthRequired } from '@auth0/nextjs-auth0';
+import { withPageAuthRequired } from '@auth0/nextjs-auth0';
 import { PillButton } from '../components/Buttons/PillButton/PillButton';
 import Highlight from '../components/Highlight';
+import { getAuthorizedUser } from '@lib/auth/auth';
 
-// export async function getServerSideProps({ req, res }) {
-//   //const { req, res } = context;
-//   const { cookies } = req;
-//   if (cookies.token === undefined) {
-//     return {
-//       redirect: {
-//         permanent: false,
-//         destination: "/login",
-//       },
-//     };
-//   }
-//   return {
-//     props: { cookie: cookies }, // will be passed to the page component as props
-//   };
-// }
+interface AuthProps {
+  user: {
+    family_name?: string;
+    given_name?: string;
+    'http://teamlemon.com/role'?: string;
+    id?: string;
+    locale?: string;
+    name?: string;
+    nickname?: string;
+    picture?: string;
+    sub?: string;
+    updated_at?: string;
+  };
+}
 
-function Profile() {
-  const { user, isLoading } = useUser();
+export const getServerSideProps = withPageAuthRequired({
+  getServerSideProps: async ({ req, res }) => {
+    const auth = await getAuthorizedUser(req, res);
+    return {
+      props: {
+        ...auth,
+      },
+    };
+  },
+});
 
+function Profile({ user }: AuthProps) {
   return (
     <>
-      {isLoading && <StyledLabel>Loading....</StyledLabel>}
       {user && (
         <Container>
           <CenteredCardBlock opacity='0.9'>
@@ -34,7 +42,7 @@ function Profile() {
             <img src={user.picture} />
             <Highlight>{JSON.stringify(user, null, 2)}</Highlight>
             <a href='/api/auth/logout'>
-              <PillButton>Logout</PillButton>
+              <PillButton label={'Logout'} />
             </a>
           </CenteredCardBlock>
         </Container>
