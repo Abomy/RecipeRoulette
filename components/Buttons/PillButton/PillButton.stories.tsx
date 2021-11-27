@@ -1,25 +1,21 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import { Button } from '../components/Buttons/BoxButton/Button';
-import { PillButton as B } from '../components/Buttons/PillButton/PillButton';
+import { PillButton } from './PillButton';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Example/Button',
-  component: Button,
+  title: 'Buttons/PillButton',
+  component: PillButton,
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   argTypes: {
     backgroundColor: { control: 'color' },
   },
-} as ComponentMeta<typeof Button>;
+} as ComponentMeta<typeof PillButton>;
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof Button> = (args) => (
+const Template: ComponentStory<typeof PillButton> = (args) => (
   <>
-    <Button {...args} />
-    <br></br>
-    <br></br>
-    <B>{args.label}</B>
+    <PillButton {...args} />
   </>
 );
 
