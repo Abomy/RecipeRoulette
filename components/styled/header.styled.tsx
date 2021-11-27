@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const StyledHeader = styled.header`
   font-size: 3em;
@@ -20,6 +20,7 @@ export const Nav = styled.nav`
 `;
 
 export const Logo = styled.img`
+  cursor: pointer;
   @media (max-width: ${({ theme }) => theme.mobile}) {
     margin-bottom: 10px;
   }

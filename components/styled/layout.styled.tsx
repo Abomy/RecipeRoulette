@@ -1,5 +1,4 @@
-import styled from "styled-components";
-import { Theme } from "../../lib/theme";
+import styled from 'styled-components';
 
 export const StyledMain = styled.div`
   position: absolute;

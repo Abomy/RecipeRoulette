@@ -6,7 +6,7 @@ import ReactHookForm from './Form';
 import { ButtonInput, PasswordInput, UserNameInput } from './Fields';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import { Button } from './styled/button.styled';
+import { PillButton } from './Buttons/PillButton/PillButton';
 import { useRouter } from 'next/dist/client/router';
 
 const LOGIN = gql`
@@ -91,7 +91,7 @@ export default function LoginForm() {
             />
             <ButtonInput label='Login' name='submit' />
           </ReactHookForm>
-          <Button onMouseUp={() => getMe()}> Get meeee</Button>
+          <PillButton onMouseUp={() => getMe()}> Get meeee</PillButton>
         </CenteredCardBlock>
       </Container>
     </span>

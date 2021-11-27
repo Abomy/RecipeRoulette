@@ -1,18 +1,19 @@
-import styled from 'styled-components';
 import { TextStyles } from '../../TextStyles';
+import styled from 'styled-components';
 
-export const Container = styled.button`
-  border-radius: 50px;
+export const Button = styled.button`
+  border-radius: 5px;
   border: none;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
   cursor: pointer;
-  padding: 15px 60px;
+  padding: 10px 25px;
   background-color: #fff;
   color: #4f4f4f;
 
-  ${TextStyles.Roman55}
+  ${TextStyles.Medium65}
 
   &:hover {
-    transform: scale(0.98);
+    background-color: gray;
+    color: white;
   }
 `;
