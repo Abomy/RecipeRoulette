@@ -2,7 +2,6 @@ import { ApolloProvider, ApolloClient, InMemoryCache } from '@apollo/client';
 import { ThemeProvider } from 'styled-components';
 import Layout from '../components/Layout';
 import { UserProvider } from '@auth0/nextjs-auth0';
-
 import { Theme } from '../lib/theme';
 import { AppProps } from 'next/app';
 
