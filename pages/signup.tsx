@@ -10,7 +10,6 @@ import {
 } from '../components/Fields';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import ErrorFields from '../components/ErrorFields';
 import { gql, useMutation } from '@apollo/client';
 
 const CREATE_ACCOUNT = gql`
@@ -52,7 +51,7 @@ const Signup = () => {
     mode: 'all',
   });
 
-  const [createAccount, { data, loading, error }] = useMutation(CREATE_ACCOUNT);
+  const [createAccount] = useMutation(CREATE_ACCOUNT);
 
   const submit = async (data) => {
     await createAccount({ variables: data });
@@ -87,7 +86,6 @@ const Signup = () => {
             {...register('passwordConfirm')}
           />
           <ButtonInput label='Sign Up' name='submit' />
-          {errors && <ErrorFields errors={errors} />}
         </ReactHookForm>
       </CenteredCard>
     </Container>

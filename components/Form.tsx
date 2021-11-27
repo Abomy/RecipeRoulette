@@ -1,14 +1,9 @@
-import { Children, cloneElement } from "react";
-import { FieldValues, SubmitHandler, UseFormRegister } from "react-hook-form";
+import React, { ReactNode } from 'react';
+interface FormProps {
+  children: ReactNode[];
+  onSubmit: React.FormEventHandler<HTMLFormElement>;
+}
 
-// export default function ReactHookForm(
-//   ref: UseFormRegister<FieldValues>,
-//   { children },
-//   onSubmit?: SubmitHandler<any>
-// ) {
-//   console.log(children);
-//   return <form onSubmit={onSubmit}></form>;
-// }
-export default function ReactHookForm({ children, onSubmit }) {
+export default function ReactHookForm({ children, onSubmit }: FormProps) {
   return <form onSubmit={onSubmit}>{children}</form>;
 }

@@ -8,6 +8,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { PillButton } from './Buttons/PillButton/PillButton';
 import { useRouter } from 'next/dist/client/router';
+import { debug } from 'console';
 
 const LOGIN = gql`
   mutation LogIn($password: String!, $username: String) {
@@ -31,19 +32,21 @@ const GET_ME = gql`
 `;
 
 export default function LoginForm() {
-  const [login, { data, loading, error }] = useMutation(LOGIN);
-  const [getMe, { called }] = useLazyQuery(GET_ME);
+  const [login, { error }] = useMutation(LOGIN);
+  const [getMe] = useLazyQuery(GET_ME);
   const router = useRouter();
 
   const onSubmit = async (data) => {
     try {
-      const response = await login({
+      await login({
         variables: {
           ...data,
         },
       });
       router.push('loggedin');
-    } catch (err) {}
+    } catch (err) {
+      debug(err);
+    }
   };
 
   const validation = yup.object().shape({
@@ -89,9 +92,9 @@ export default function LoginForm() {
               error={errors.password}
               {...register('password')}
             />
-            <ButtonInput label='Login' name='submit' />
+            <ButtonInput label='Login' />
           </ReactHookForm>
-          <PillButton onMouseUp={() => getMe()}> Get meeee</PillButton>
+          <PillButton onClick={() => getMe()} label={' Get meeee'} />
         </CenteredCardBlock>
       </Container>
     </span>

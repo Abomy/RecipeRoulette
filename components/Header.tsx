@@ -6,8 +6,8 @@ import { Theme } from '../lib/theme';
 import Link from 'next/link';
 import { useUser } from '@auth0/nextjs-auth0';
 
-export default function Header(...args) {
-  const { user, isLoading } = useUser();
+export default function Header() {
+  const { user } = useUser();
   return (
     <StyledHeader>
       <Container>

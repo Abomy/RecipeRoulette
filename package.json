@@ -1,5 +1,5 @@
 {
-  "name": "hello-next",
+  "name": "recipe-roulette",
   "version": "1.0.0",
   "description": "",
   "keywords": [],
@@ -13,7 +13,7 @@
     "generate:prisma": "prisma generate",
     "ts-node": "ts-node --compiler-options \"{\\\"module\\\":\\\"commonjs\\\"}\"",
     "generate:nexus": "ts-node --transpile-only -P nexus.tsconfig.json pages/api",
-    "lint": "./node_modules/.bin/eslint",
+    "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"

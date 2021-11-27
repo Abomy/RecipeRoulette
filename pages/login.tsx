@@ -1,6 +1,6 @@
-import LoginForm from "../components/Login";
+import LoginForm from '../components/Login';
 
-export async function getServerSideProps({ req, res }) {
+export async function getServerSideProps({ req }) {
   //const { req, res } = context;
   const { cookies } = req;
 
@@ -8,7 +8,7 @@ export async function getServerSideProps({ req, res }) {
     return {
       redirect: {
         permanent: false,
-        destination: "/loggedin",
+        destination: '/loggedin',
       },
     };
   }

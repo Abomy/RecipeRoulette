@@ -1,29 +1,30 @@
-import React from "react";
-import { InputContainer } from "./styled/container.styled";
+import React from 'react';
+import { InputContainer } from './styled/container.styled';
 import {
   StyledInput,
   SubmitButton,
   StyledLabel,
   ErrorLabel,
-} from "./styled/fields.styled";
+} from './styled/fields.styled';
 
 interface BaseInputProps
   extends Pick<
     React.HTMLProps<HTMLInputElement>,
-    "onChange" | "onBlur" | "type"
+    'onChange' | 'onBlur' | 'type'
   > {
   label: string;
+  name?: string;
   error?: { message?: string };
 }
 
 export const BaseInput = React.forwardRef<HTMLInputElement, BaseInputProps>(
-  (props, ref) => {
-    if (props.label) {
+  function BaseInput({ label, error, ...props }, ref) {
+    if (label) {
       return (
         <InputContainer>
-          <StyledLabel>{props.label}</StyledLabel>
+          <StyledLabel>{label}</StyledLabel>
           <StyledInput {...props} ref={ref} />
-          <ErrorLabel>{props?.error?.message}</ErrorLabel>
+          <ErrorLabel>{error?.message}</ErrorLabel>
         </InputContainer>
       );
     }
@@ -32,23 +33,23 @@ export const BaseInput = React.forwardRef<HTMLInputElement, BaseInputProps>(
 );
 
 export const UserNameInput = React.forwardRef<HTMLInputElement, BaseInputProps>(
-  (props, ref) => {
+  function UserNameInput(props, ref) {
     return <BaseInput {...props} ref={ref} />;
   }
 );
 
 export const EmailInput = React.forwardRef<HTMLInputElement, BaseInputProps>(
-  (props, ref) => {
+  function EmailInput(props, ref) {
     return <BaseInput {...props} ref={ref} />;
   }
 );
 
 export const PasswordInput = React.forwardRef<HTMLInputElement, BaseInputProps>(
-  (props, ref) => {
-    return <BaseInput type={"password"} {...props} ref={ref} />;
+  function PasswordInput(props, ref) {
+    return <BaseInput type={'password'} {...props} ref={ref} />;
   }
 );
 
-export const ButtonInput = props => {
-  return <SubmitButton type={"submit"} value={props.label} {...props} />;
+export const ButtonInput = (props: BaseInputProps) => {
+  return <SubmitButton type={'submit'} value={props.label} {...props} />;
 };

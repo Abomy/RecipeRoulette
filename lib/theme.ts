@@ -1,5 +1,3 @@
-import { createGlobalStyle } from 'styled-components';
-
 export const Theme = {
   colours: {
     header: '#45a049',

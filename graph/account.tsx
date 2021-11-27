@@ -26,7 +26,7 @@ export const signupUser = extendType({
         email: nonNull(stringArg()),
         password: nonNull(stringArg()),
       },
-      resolve: (_, { username, email, password }, ctx) => {
+      resolve: (_, { username, email, password }) => {
         const salt = crypto.randomBytes(16).toString('hex');
         const passwordHash = crypto
           .pbkdf2Sync(password, salt, 1000, 64, 'sha512')

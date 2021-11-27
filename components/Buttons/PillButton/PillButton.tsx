@@ -1,7 +1,15 @@
 import React, { ReactNode } from 'react';
 import { Container } from './PillButton.styled';
 
-interface ButtonProps {
+// interface ButtonProps
+//   extends Omit<
+//     React.HTMLProps<HTMLButtonElement>,
+//     'label' | 'ref' | 'type' | 'as'
+//   > {
+//   label: string | ReactNode[];
+// }
+interface ButtonProps
+  extends Pick<React.HTMLProps<HTMLButtonElement>, 'onClick' | 'onMouseDown'> {
   label: string | ReactNode;
 }
 
