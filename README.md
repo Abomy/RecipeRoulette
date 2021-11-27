@@ -16,3 +16,9 @@ After pulling to apply any migrations run:
 ### Studio
 
 `npx prisma studio`
+
+### Storybook
+
+Develop components without needing to put UI into specific state
+
+`npm run storybook`
