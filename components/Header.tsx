@@ -2,7 +2,7 @@ import React from 'react';
 import { StyledHeader, Nav, Logo } from './styled/header.styled';
 import { Container } from './styled/container.styled';
 import { PillButton } from './Buttons/PillButton/PillButton';
-import { Theme } from '../lib/theme';
+import { Theme } from '@lib/theme';
 import Link from 'next/link';
 import { useUser } from '@auth0/nextjs-auth0';
 

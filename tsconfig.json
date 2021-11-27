@@ -6,6 +6,15 @@
       If you need to change it, you should use the --compiler-options or provide a separate 
       tsconfig.json entirely.
     */
+    "baseUrl": ".",
+    "paths": {
+      // "@components/*": ["components/*"],
+      // "@lib/*": ["lib/*"],
+      // "@graph": ["graph/"],
+      // // "@graph/*": ["graph/*"],
+      // "@pages/*": ["pages/*"],
+      "@*": [ "./*" ],
+    },
     "module": "esnext",
     "target": "ES2019",
     "lib": ["dom", "dom.iterable", "esnext"],

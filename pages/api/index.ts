@@ -1,17 +1,17 @@
-import { ApolloServer } from "apollo-server-micro";
-import { NextApiHandler } from "next";
-import { makeSchema } from "nexus";
-import path from "path";
-import cors from "micro-cors";
-import * as GraphTypes from "../../graph";
-import { getLoginSession } from "../../lib/auth/auth";
-import cookies from "../../lib/auth/cookie";
+import { ApolloServer } from 'apollo-server-micro';
+import { NextApiHandler } from 'next';
+import { makeSchema } from 'nexus';
+import path from 'path';
+import cors from 'micro-cors';
+import * as GraphTypes from '@graph/index';
+import { getLoginSession } from '@lib/auth/auth';
+import cookies from '@lib/auth/cookie';
 
 export const schema = makeSchema({
   types: [GraphTypes],
   outputs: {
-    typegen: path.join(process.cwd(), "generated/nexus-typegen.ts"),
-    schema: path.join(process.cwd(), "generated/schema.graphql"),
+    typegen: path.join(process.cwd(), 'generated/nexus-typegen.ts'),
+    schema: path.join(process.cwd(), 'generated/schema.graphql'),
   },
 });
 
@@ -47,7 +47,7 @@ async function getApolloServerHandler() {
     await apolloServer.start();
 
     apolloServerHandler = apolloServer.createHandler({
-      path: "/api",
+      path: '/api',
     });
   }
 
@@ -57,7 +57,7 @@ async function getApolloServerHandler() {
 const handler: NextApiHandler = async (req, res) => {
   const apolloServerHandler = await getApolloServerHandler();
 
-  if (req.method === "OPTIONS") {
+  if (req.method === 'OPTIONS') {
     res.end();
     return;
   }

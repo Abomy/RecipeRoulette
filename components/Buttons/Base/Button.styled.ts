@@ -1,4 +1,4 @@
-import { TextStyles } from '../../TextStyles';
+import { TextStyles } from '@components/TextStyles';
 import styled from 'styled-components';
 
 export const Button = styled.button`
