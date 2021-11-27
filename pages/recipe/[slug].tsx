@@ -3,7 +3,15 @@ import prisma from '@lib/prisma';
 import { GetStaticPropsResult } from 'next';
 
 interface PostProps {
-  recipe: Recipe;
+  recipe: Recipe & {
+    _count: {
+      favorites: number;
+    };
+    creator: {
+      username: string;
+      email: string;
+    };
+  };
 }
 
 type Params = {
@@ -12,20 +20,28 @@ type Params = {
   };
 };
 
-export default function Post(props: PostProps) {
-  const {
-    recipe: { id },
-  } = props;
+export default function Post({ recipe }: PostProps) {
+  const { _count } = recipe;
 
   return (
     <div
       css={`
+        display: flex;
         font-size: 20px;
         font-weight: 600;
         padding: 20px;
+        flex-direction: column;
       `}
     >
-      {id}
+      <div>{recipe.id}</div>
+      <div
+        css={`
+          color: red;
+          padding-top: 20px;
+        `}
+      >
+        {_count.favorites}: loved this recipe!
+      </div>
     </div>
   );
 }
@@ -55,6 +71,17 @@ export async function getStaticProps({
   const record = await prisma.recipe.findUnique({
     where: {
       slug: params.slug,
+    },
+    include: {
+      creator: {
+        select: {
+          username: true,
+          email: true,
+        },
+      },
+      _count: {
+        select: { favorites: true },
+      },
     },
   });
 
