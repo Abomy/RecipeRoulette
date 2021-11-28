@@ -4,6 +4,7 @@ import { GetStaticPropsResult } from 'next';
 import React from 'react';
 import { withPageAuthRequired } from '@auth0/nextjs-auth0';
 import { StyledLabel } from '@components/styled/fields.styled';
+import { RecipeIngredient } from '@prisma/client';
 
 interface PostProps {
   recipe: Recipe & {
@@ -14,6 +15,7 @@ interface PostProps {
       username: string;
       email: string;
     };
+    recipe_ingredients: RecipeIngredient[];
   };
 }
 
@@ -63,6 +65,7 @@ export async function getServerSideProps({
           email: true,
         },
       },
+      recipe_ingredients: {},
       _count: {
         select: { favorites: true },
       },

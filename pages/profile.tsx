@@ -4,6 +4,7 @@ import { StyledLabel } from '../components/styled/fields.styled';
 import { withPageAuthRequired } from '@auth0/nextjs-auth0';
 import { PillButton } from '../components/Buttons/PillButton/PillButton';
 import Highlight from '../components/Highlight';
+import Link from 'next/link';
 import { getAuthorizedUser, serverSideAuthHandler } from '@lib/auth/auth';
 
 interface AuthProps {
@@ -42,6 +43,10 @@ export default function Profile({ user, test }: AuthProps) {
             <a href='/api/auth/logout'>
               <PillButton label={'Logout'} />
             </a>
+
+            <Link href='/recipe/edit'>
+              <PillButton label={'Create Recipe'} />
+            </Link>
           </CenteredCardBlock>
         </Container>
       )}
