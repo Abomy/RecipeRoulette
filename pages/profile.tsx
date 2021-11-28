@@ -1,14 +1,12 @@
 import { CenteredCardBlock } from '../components/styled/card.styled';
 import { Container } from '../components/styled/container.styled';
 import { StyledLabel } from '../components/styled/fields.styled';
-import { withPageAuthRequired } from '@auth0/nextjs-auth0';
 import { PillButton } from '../components/Buttons/PillButton/PillButton';
 import Highlight from '../components/Highlight';
 import Link from 'next/link';
-import { getAuthorizedUser, serverSideAuthHandler } from '@lib/auth/auth';
+import { serverSideAuthHandler } from '@lib/auth/auth';
 
 interface AuthProps {
-  test: string;
   user: {
     family_name?: string;
     given_name?: string;
@@ -23,15 +21,11 @@ interface AuthProps {
   };
 }
 
-export const getServerSideProps = serverSideAuthHandler((req, res, user) => {
-  console.log(user);
-  return {
-    test: 'test',
-  };
+export const getServerSideProps = serverSideAuthHandler((ctx, user) => {
+  return {};
 });
 
-export default function Profile({ user, test }: AuthProps) {
-  console.log(test);
+export default function Profile({ user }: AuthProps) {
   return (
     <>
       {user && (
@@ -44,7 +38,7 @@ export default function Profile({ user, test }: AuthProps) {
               <PillButton label={'Logout'} />
             </a>
 
-            <Link href='/recipe/edit'>
+            <Link href='/recipe/create'>
               <PillButton label={'Create Recipe'} />
             </Link>
           </CenteredCardBlock>

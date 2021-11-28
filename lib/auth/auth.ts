@@ -1,6 +1,12 @@
-import { getSession, Session, withPageAuthRequired } from '@auth0/nextjs-auth0';
+import {
+  Claims,
+  getSession,
+  Session,
+  withPageAuthRequired,
+} from '@auth0/nextjs-auth0';
 import Iron from '@hapi/iron';
 import prisma from '@lib/prisma';
+import { GetServerSidePropsContext } from 'next';
 import { MAX_AGE, setTokenCookie, getTokenCookie } from './auth-cookies';
 
 const TOKEN_SECRET =
@@ -46,15 +52,17 @@ export async function getAuthorizedUser(req, res): Promise<Session> {
   return session;
 }
 
-export function serverSideAuthHandler(callback) {
+export function serverSideAuthHandler(
+  callback?: (ctx: GetServerSidePropsContext, user: Claims) => any
+) {
   return withPageAuthRequired({
-    getServerSideProps: async ({ req, res }) => {
-      const auth = await getAuthorizedUser(req, res);
-
+    getServerSideProps: async (ctx) => {
+      const auth = await getAuthorizedUser(ctx.req, ctx.res);
+      const extra = (callback && callback(ctx, auth.user)) || null;
       return {
         props: {
           ...auth,
-          ...callback(req, res, auth.user),
+          ...extra,
         },
       };
     },

@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const ErrorLabel = styled.label`
   // specifics
@@ -55,5 +55,5 @@ export const SubmitButton = styled(StyledInput)`
 `;
 
 export const JsonCode = styled.code`
-  font-size: 3em;
+  font-size: 1em;
 `;

@@ -21,6 +21,8 @@ export const getServerSideProps = withPageAuthRequired({
   getServerSideProps: async ({ req, res }) => {
     const { user } = getSession(req, res);
 
+    console.log(user);
+
     let record = await prisma.account.findFirst({
       where: { auth0: user.sub },
     });
