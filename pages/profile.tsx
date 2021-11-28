@@ -4,9 +4,10 @@ import { StyledLabel } from '../components/styled/fields.styled';
 import { withPageAuthRequired } from '@auth0/nextjs-auth0';
 import { PillButton } from '../components/Buttons/PillButton/PillButton';
 import Highlight from '../components/Highlight';
-import { getAuthorizedUser } from '@lib/auth/auth';
+import { getAuthorizedUser, serverSideAuthHandler } from '@lib/auth/auth';
 
 interface AuthProps {
+  test: string;
   user: {
     family_name?: string;
     given_name?: string;
@@ -21,18 +22,15 @@ interface AuthProps {
   };
 }
 
-export const getServerSideProps = withPageAuthRequired({
-  getServerSideProps: async ({ req, res }) => {
-    const auth = await getAuthorizedUser(req, res);
-    return {
-      props: {
-        ...auth,
-      },
-    };
-  },
+export const getServerSideProps = serverSideAuthHandler((req, res, user) => {
+  console.log(user);
+  return {
+    test: 'test',
+  };
 });
 
-function Profile({ user }: AuthProps) {
+export default function Profile({ user, test }: AuthProps) {
+  console.log(test);
   return (
     <>
       {user && (
@@ -51,7 +49,7 @@ function Profile({ user }: AuthProps) {
   );
 }
 
-export default withPageAuthRequired(Profile, {
-  onRedirecting: () => <StyledLabel>Loading....</StyledLabel>,
-  onError: (error) => <StyledLabel>{error.message}</StyledLabel>,
-});
+// export default withPageAuthRequired(Profile, {
+//   onRedirecting: () => <StyledLabel>Loading....</StyledLabel>,
+//   onError: (error) => <StyledLabel>{error.message}</StyledLabel>,
+// });
