@@ -5,6 +5,8 @@ import { UserProvider } from '@auth0/nextjs-auth0';
 import { Theme } from '../lib/theme';
 import { AppProps } from 'next/app';
 
+import '@lib/reset.css';
+
 const client = new ApolloClient({
   cache: new InMemoryCache(),
   uri: '/api',

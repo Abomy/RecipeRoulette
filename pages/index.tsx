@@ -1,13 +1,8 @@
 import React from 'react';
-import { CenteredCard } from '@components/styled/card.styled';
-import { Container } from '@components/styled/container.styled';
+import { LandingPage } from '@layout/Landing/Landing';
 
 const Landing = () => {
-  return (
-    <Container>
-      <CenteredCard opacity={'0.9'}></CenteredCard>
-    </Container>
-  );
+  return <LandingPage />;
 };
 
 export default Landing;

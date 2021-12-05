@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const StyledFooter = styled.footer`
   font-size: 2em;
@@ -6,7 +6,7 @@ export const StyledFooter = styled.footer`
   bottom: 0;
   right: 0;
   left: 0;
-  background-color: ${({ theme }) => theme.colours.footer};
+  background-color: ${({ theme }) => theme.colours.primary};
   color: #fff;
   padding: 0.5em 0 1px;
   ul {
